@@ -1,0 +1,10 @@
+{
+    "name": "git-fortune",
+    "description": "Returns a random git commmit message",
+    "author": "Brendan Clune <brendan@bclune.org>",
+    "dependencies": {
+        "redis": "0.8.x",
+        "hiredis": "0.1.x"
+    },
+    "engine": "node >= 0.6.12"
+}
