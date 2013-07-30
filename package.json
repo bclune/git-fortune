@@ -6,5 +6,8 @@
         "redis": "0.8.x",
         "hiredis": "0.1.x"
     },
+    "devDependencies": {
+        "vows": "0.7.x"
+    }
     "engine": "node >= 0.6.12"
 }
