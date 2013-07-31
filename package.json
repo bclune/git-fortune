@@ -6,7 +6,8 @@
         "redis": "0.8.x",
         "hiredis": "0.1.x",
         "request": "2.25.x",
-        "shuffle": "0.2.x"
+        "shuffle": "0.2.x",
+        "escape-html": "1.0.x"
     },
     "devDependencies": {
         "vows": "0.7.x"
