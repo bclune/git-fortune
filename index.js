@@ -6,5 +6,7 @@ var requestHandlers = require("./requestHandlers");
 var handle = {};
 
 handle["/"] = requestHandlers.displayRandomMessage;
+handle["/favicon.ico"] = requestHandlers.displayResource;
+handle._default = requestHandlers.displayMessage;
 
 server.start(port, router.route, handle);

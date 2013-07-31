@@ -1,5 +1,5 @@
 var redis = require('redis'),
-    client = redis.createClient();
+    redisClient = redis.createClient();
 
 var request = require('request');
 var view = require('./view');
@@ -15,6 +15,9 @@ function fetchCommitHistoryFromGithub(repository, serverResponse) {
     request.get(apiString, function(error, response, body){
         if (!error && response.statusCode == 200) {
             extractMessage(body, serverResponse);
+            redisClient.setex(repository, CACHE_TIMEOUT, body);
+        } else {
+            view.writeNotFound();
         }
     });
 }
@@ -23,28 +26,17 @@ function extractMessage(commitJson, response) {
     var commits = JSON.parse(commitJson);
     randomCommit = shuffle.shuffle({deck: commits}).drawRandom();
     view.writeMessage(randomCommit.commit.message, response);
-
-
 }
 
-function getCommitMessagesFromCache(repository) {
-    githubResponse = client.get(repository);
-    if (messages === null) {
-        githubResponse = fetchCommitHistoryFromGithub(repository);
-        client.setex(repository, CACHE_TIMEOUT, messages);
-    }
-
-    messages = parseResponse(githubResponse);
-    return messages;
+function getGithubResponseFromCache(repository, response) {
+    redisClient.get(repository, function(err, res) { 
+        if (res === null) {
+            console.log('Refreshing cache from github repo: ' + repository);
+            fetchCommitHistoryFromGithub(repository, response);
+        } else {
+            extractMessage(res, response);
+        }
+    });
 }
 
-
-function chooseRandomMessage(messages) {
-
-}
-
-function getRandomCommitMessage(repository) {
-    return chooseRandomMessage(getCommitMessages(repository));
-}
-
-exports.displayMessage = fetchCommitHistoryFromGithub;
+exports.displayMessage = getGithubResponseFromCache;
