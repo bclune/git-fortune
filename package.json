@@ -4,10 +4,12 @@
     "author": "Brendan Clune <brendan@bclune.org>",
     "dependencies": {
         "redis": "0.8.x",
-        "hiredis": "0.1.x"
+        "hiredis": "0.1.x",
+        "request": "2.25.x",
+        "shuffle": "0.2.x"
     },
     "devDependencies": {
         "vows": "0.7.x"
-    }
-    "engine": "node >= 0.6.12"
+    },
+    "engine": "node >= 0.8.0"
 }

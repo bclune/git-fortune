@@ -1,21 +1,36 @@
-var redis = require("redis"),
+var redis = require('redis'),
     client = redis.createClient();
+
+var request = require('request');
+var view = require('./view');
+
+var shuffle = require('shuffle');
 
 // redis cache expiration in seconds
 var CACHE_TIMEOUT = 300;
 
-function fetchMessagesFromGithub(repository) {
+function fetchCommitHistoryFromGithub(repository, serverResponse) {
+    apiString = 'https://api.github.com/repos' + repository + '/commits';
+    console.log('Requesting ' + apiString);
+    request.get(apiString, function(error, response, body){
+        if (!error && response.statusCode == 200) {
+            extractMessage(body, serverResponse);
+        }
+    });
+}
+
+function extractMessage(commitJson, response) {
+    var commits = JSON.parse(commitJson);
+    randomCommit = shuffle.shuffle({deck: commits}).drawRandom();
+    view.writeMessage(randomCommit.commit.message, response);
+
 
 }
 
-function parseResponse(repository) {
-
-}
-
-function getCommitMessages(repository) {
+function getCommitMessagesFromCache(repository) {
     githubResponse = client.get(repository);
     if (messages === null) {
-        githubResponse = fetchMessagesFromGithub(repository);
+        githubResponse = fetchCommitHistoryFromGithub(repository);
         client.setex(repository, CACHE_TIMEOUT, messages);
     }
 
@@ -23,13 +38,13 @@ function getCommitMessages(repository) {
     return messages;
 }
 
+
 function chooseRandomMessage(messages) {
 
 }
 
 function getRandomCommitMessage(repository) {
     return chooseRandomMessage(getCommitMessages(repository));
-
 }
 
-exports.getRandomCommitMessage = getRandomCommitMessage;
+exports.displayMessage = fetchCommitHistoryFromGithub;
