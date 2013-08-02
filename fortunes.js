@@ -8,10 +8,13 @@ var view = require('./view');
 
 // redis cache expiration in seconds
 var CACHE_TIMEOUT = 10;
+var MAX_MESSAGES = 500;
 var REDIS_404_TOKEN = "_404";
 
 function fetchCommitHistoryFromGithub(repository, serverResponse) {
-    apiString = 'https://api.github.com/repos' + repository + '/commits';
+    apiString = 'https://api.github.com/repos' + 
+                repository + 
+                '/commits?per_page=100';
     console.log('Requesting ' + apiString);
     request.get(apiString, function(error, response, body){
         if (!error && response.statusCode == 200) {
