@@ -7,6 +7,8 @@ Grab a random commit message. Go on. Do it.
 - [ ] Pull up to X commits (500?)
 - [ ] Refactor request handling to use ``express`` (all the cool kids are
       doing it)
-- [ ] Prettify html output
-- [ ] Serve static resources (css and favicon.ico)
+- [x] Prettify html output
+- [x] Serve static resources (css and favicon.ico)
+- [ ] GitHub authentication
+- [ ] Better caching (conditional GitHub requests?)
 - [ ] GitHub pages/API documentation
