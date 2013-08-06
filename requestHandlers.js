@@ -31,13 +31,12 @@ function displayResource(pathname, response) {
             view.writeNotFound(response);    
             return;
         }
-    var mimeType = mimeTypes[path.extname(filename).split(".")[1]];
-    response.writeHead(200, mimeType);
-    var fileStream = fs.createReadStream(filename);
-    fileStream.pipe(response);
-
-}); //end path.exists
-    //TODO: serve resource
+        var mimeType = mimeTypes[path.extname(filename).split(".")[1]];
+        console.log(mimeType);
+        response.writeHead(200,{'Content-Type': mimeType});
+        var fileStream = fs.createReadStream(filename);
+        fileStream.pipe(response);
+    });
 }
 
 exports.displayRandomMessage = displayRandomMessage;

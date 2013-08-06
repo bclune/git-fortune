@@ -8,7 +8,7 @@ function writeMessage(messageText, response) {
         '</head>' +
         '<body>'+
         '<a href="https://github.com/bclune/git-fortune">' + 
-        '<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>' +
+        '<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>' +
         '<div class="message">' +
         escape(messageText) +
         '</div></body></html>';
@@ -16,6 +16,7 @@ function writeMessage(messageText, response) {
     response.writeHead(200, {"Content-Type": "text/html"});
     response.write(message);
     response.end();
+    return;
 }
 
 function writeNotFound(response) {
@@ -23,7 +24,7 @@ function writeNotFound(response) {
     response.writeHead(404, {"Content-Type": "text/html"});
     response.write(message);
     response.end();
-
+    return;
 }
 
 exports.writeMessage = writeMessage;
