@@ -3,6 +3,8 @@ git-fortune
 
 Grab a random commit message. Go on. Do it.
 
+Or check out the demo: http://git-fortune.bclune.org/
+
 ##TODO
 - [ ] Pull up to X commits (500?)
 - [ ] Refactor request handling to use ``express`` (all the cool kids are
